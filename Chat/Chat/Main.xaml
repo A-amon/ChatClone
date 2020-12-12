@@ -1,0 +1,49 @@
+﻿<Window x:Class="Chat.Main"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chat"
+        mc:Ignorable="d"
+        Title="Main" Height="450" Width="800"
+        WindowStyle="None"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Background="#191919" 
+        xmlns:uc="clr-namespace:Chat"
+        >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" VerticalAlignment="Top" Background="Transparent" MouseLeftButtonDown="MoveWindow">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,5">
+                <Button Click="MinimizeWindow">
+                    <materialDesign:PackIcon Kind="WindowMinimize" Foreground="White"/>
+                </Button>
+                <Button Click="RestoreWindow">
+                    <materialDesign:PackIcon Kind="WindowRestore" Foreground="White"/>
+                </Button>
+                <Button Click="CloseWindow">
+                    <materialDesign:PackIcon Kind="Close" Foreground="White"/>
+                </Button>
+            </StackPanel>
+        </DockPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.6*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0.45*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Background="#323232">
+                <StackPanel Background="#191919" Width="70">
+                    <uc:Sidebar___ChatCircleButton ImageSrc="/Images/DM.png" Type="Dm"/>
+                    <uc:Sidebar___ChatCircleButton ImageSrc="" Type="Add"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Background="#4c4c4c">
+                
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
