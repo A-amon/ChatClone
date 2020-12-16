@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "ferrous-destiny-298611",
+  "private_key_id": "7ebd69996c450331b87f0852a3aadfbbf30ebe09",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCzB6/IS6MFZGJr\nPpYyG+UO9rHzZ7CwBfh9Ji4qtRQ2U6XQFLYYuZJ9R5/r7xWxCwUTjcEzYjiMOo/a\nLMvR+rACD/cQg+vFSO6hL81jVkVg6NLporTqq38iNBHLFPJFhi8210tTolUqhvuz\noFgIIR9fnu1x5gWnJCvhhC3Cog3WJo4rX+swVJyvWyAyEH8mXStH5cz4NHwgY/6a\n4OeGNr8GxQxqmcdxrrk9JA2sUcuY7bv9wxTfLl4o7+erLPihz1X0AfEFRvovhWFY\nP2JYHSkAIkGbIojtfeXonjSzboYAEglE5T6zU2srqCcuc2W+QNg4gCl586L8285q\nkpjAAicXAgMBAAECggEAEdt9bCQnQZ1ut7XJc3wWz/RJcbbxB83AqHMLfdUMDBMx\n4dx/AV5ZP0fKqtTxO/SWcAnesIpmi4431RJMzkgMEFiZUztlZAtPSiKjgPoU94Kh\nrw48r3+lsbqx36jaNZcZ1IWLDO+PQSuvpY4j2cO8BmSq2IaSH8ba3aa6jcRuTuLk\n1f4EQ0OPVGrJhqrjL5xv+7UKaOPJyu2AwY67LyqzUJ4E96q60AX7oW8ZBLg5vQLg\n4yx5uk4vGiwzS6n3OqdxYAxcqAgeDefyTRR3IfsTWC/mBa/zt13QOHso/dwc58if\nkT02ld+xA/YTnrw8B39+PgLBBPAB+W1UpI2UJUIsgQKBgQDkJOVHs3efZGmol0Q9\n/gYyx034b1J2iHj9jxfb5sKwQUVscEyDENSv3i2Oq/Q0C65zZw8+Ai/1Xevpe0D1\n1Zjct4/7HYniqhEQ+7US6Irxd1Rku6Hw7fPt4uM6oXnqErMZzUuS9sPmCHHc0OI/\n7EHgeKA+uL49W59nQGplYJxR1wKBgQDI46GEJbxEIxx4Dossa+iM9WlXOFHNQDku\n5upDvt2UYPUWTClgT27JST0gRsTN5h6+gKPng/uS4L0NgTYb6k1DuNU/PVre+Izw\nQfVowYdHMFQPzKqjOaJX9P5RAiFNQWQhU05UozZQZnz+ZjAxTh46njIdwV06VtEY\n4o+PaLSswQKBgFGq83hrQhMIutni7EbUvBtJRRv9naNYzxbVNlE9lcvKUbOzr2/r\ngndCLUS5QT2wQM6GweoMlmZbLKvztxlJUOMRwrS9qjI9dsaBlBwkqjgt40P79shs\nJbmuUnEWhLHJ59sApmEBfLbHpxrIm3UOebaE97f8If2M4s7vPCb2In8ZAoGAALFY\nQz5mEc4VMQzLyhFtMd8+x8A39/86s0C0mhs0ZGiZL8R/eAeOGD+aaFwWHaenf3yu\nFAROf8kqnbtOVnZOYednRNqPT6mHwuRXVk8kikhOYeeQxxNRzf/YSKs7Nir9j2fc\nI0qUy14vHCl6DRF55TXacmPSUHswKWfOmu3/gYECgYEAjDHPrp/nj+qgA3Yv3Srg\ncSNGAYNuZfKuf94g4LvsnLqtz3N0YnTVD+jgtovndkdvfBpH5U+lKoyi79VcWodo\noLc7z6VxZn1OhyjcBwSwC9NQbEV4kmaLp0Es1nRdHJAIs2lzgOKBWUX+/YxlqJYI\nG/8FbCT+G57LakbgJVvVCVo=\n-----END PRIVATE KEY-----\n",
+  "client_email": "chatserviceacc@ferrous-destiny-298611.iam.gserviceaccount.com",
+  "client_id": "105572097546292299778",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/chatserviceacc%40ferrous-destiny-298611.iam.gserviceaccount.com"
+}

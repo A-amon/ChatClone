@@ -24,6 +24,8 @@ namespace Chat
         {
             InitializeComponent();
             SetCurrentPage("login");
+
+            System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "../../Chat-7ebd69996c45.json");
         }
 
         public void SetCurrentPage(string page)

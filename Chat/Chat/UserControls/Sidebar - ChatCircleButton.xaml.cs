@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Chat.Classes;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,10 +22,27 @@ namespace Chat
     /// </summary>
     public partial class Sidebar___ChatCircleButton : UserControl
     {
+
         public Sidebar___ChatCircleButton()
         {
             InitializeComponent();
+
             this.DataContext = this;
+        }
+
+        public string Selected { get; set; }
+
+        public string BgColor {
+            get {
+                if (Selected != null && Selected.Equals("True"))
+                {
+                    return "#FF1A73E8";
+                }
+                return "#323232";
+            }
+            set
+            {
+            }
         }
 
         public Uri _ImageSrc;
@@ -49,6 +68,13 @@ namespace Chat
                 image_object.Visibility = Visibility.Collapsed;
                 icon_object.Visibility = Visibility.Visible;
             }
+        }
+
+        private void SelectTab(object sender, RoutedEventArgs e)
+        {
+            /*
+            Events events = new Events();
+            events.SelectTab(this);*/
         }
     }
 }

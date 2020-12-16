@@ -8,7 +8,8 @@
              Margin="5,0,5,10"
             >
     <!--FF1A73E8-->
-    <Button Background="#323232" Width="50" Height="50" materialDesign:ButtonAssist.CornerRadius="100" BorderThickness="0">
+    <!--323232-->
+    <Button Background="{Binding BgColor}" Width="50" Height="50" materialDesign:ButtonAssist.CornerRadius="100" BorderThickness="0" Click="SelectTab">
         <Grid Loaded="CheckType">
             <Image Source="{Binding ImageSrc}"/>
             <materialDesign:PackIcon Kind="Plus" Foreground="YellowGreen" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" />

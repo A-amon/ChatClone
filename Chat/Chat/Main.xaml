@@ -3,13 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Chat"
         mc:Ignorable="d"
         Title="Main" Height="450" Width="800"
         WindowStyle="None"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Background="#191919" 
         xmlns:uc="clr-namespace:Chat"
+         WindowStartupLocation="CenterScreen"
         >
     <Grid>
         <Grid.RowDefinitions>
@@ -31,19 +31,35 @@
         </DockPanel>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.6*"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="0.45*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Orientation="Horizontal" Background="#323232">
-                <StackPanel Background="#191919" Width="70">
-                    <uc:Sidebar___ChatCircleButton ImageSrc="/Images/DM.png" Type="Dm"/>
-                    <uc:Sidebar___ChatCircleButton ImageSrc="" Type="Add"/>
+            <!--<StackPanel Grid.Column="0" Orientation="Horizontal" Background="#323232" Width="300">
+                <StackPanel Background="#191919" Width="70" Name="ChatsPanel">
+                    <uc:Sidebar___ChatCircleButton Tag="Dm" x:Name="DMChatButton" ImageSrc="/Images/DM.png" Type="Dm"/>
+                    <uc:Sidebar___ChatCircleButton Tag="Add" ImageSrc="" Type="Add"/>
                 </StackPanel>
-            </StackPanel>
-            <StackPanel Grid.Column="1" Background="#4c4c4c">
+            </StackPanel>-->
+            <ItemsControl Grid.Column="0" Name="ChatsPanel" Background="#191919" Width="70">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Tag="{Binding Id}" Background="#323232" Width="50" Height="50" materialDesign:ButtonAssist.CornerRadius="100" BorderThickness="0" Margin="0,0,0,10" Click="SelectTab">
+                            <Grid Tag="{Binding Type}" Loaded="CheckType">
+                                <Image Source="{Binding Image}"/>
+                                <materialDesign:PackIcon Kind="Plus" Foreground="YellowGreen" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" Height="20" Width="20"/>
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Frame Name="MainFrame" Grid.Column="1" Background="#36393f" NavigationUIVisibility="Hidden">
                 
-            </StackPanel>
+            </Frame>
         </Grid>
     </Grid>
 </Window>

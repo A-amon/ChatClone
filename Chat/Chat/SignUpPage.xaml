@@ -19,11 +19,11 @@
     <StackPanel>
         <TextBlock Text="Sign Up" Foreground="White" FontSize="20" FontWeight="DemiBold" Margin="0,10,0,15"/>
         <Label Style="{StaticResource label}">Email Address</Label>
-        <TextBox Foreground="White" materialDesign:HintAssist.HintOpacity="0.2" BorderBrush="Gray" Margin="3,0,3,0"/>
-        <Label Style="{StaticResource label}" Margin="0,15,0,0">Password</Label>
-        <PasswordBox Foreground="White" materialDesign:HintAssist.HintOpacity="0.2" materialDesign:HintAssist.HelperText="Must contain at least 6 letters" BorderBrush="Gray" Margin="3,0,3,0"/>
-        <Label Style="{StaticResource label}" Margin="0,20,0,0">Confirm Password</Label>
-        <PasswordBox Foreground="White" materialDesign:HintAssist.HintOpacity="0.2" BorderBrush="Gray" Margin="3,0,3,15"/>
+        <TextBox Name="EmailTextbox" Foreground="White" materialDesign:HintAssist.HintOpacity="0.2" BorderBrush="Gray" Margin="3,0,3,0"/>
+        <Label Style="{StaticResource label}" Margin="0,15,0,0">Username</Label>
+        <TextBox Name="UsernameTextbox" Foreground="White" materialDesign:HintAssist.HintOpacity="0.2" BorderBrush="Gray" Margin="3,0,3,0"/>
+        <Label Style="{StaticResource label}" Margin="0,20,0,0">Password</Label>
+        <PasswordBox Name="PasswordTextbox" Foreground="White" materialDesign:HintAssist.HintOpacity="0.2"  materialDesign:HintAssist.HelperText="Must contain at least 6 letters"  BorderBrush="Gray" Margin="3,0,3,15"/>
         <Button Background="#FF1A73E8" Foreground="White" Margin="0,10,0,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Click="SignUp">Sign Up</Button>
         <TextBlock Margin="0,10,0,0" Foreground="Gray">Already have an account?  <Hyperlink NavigateUri="LoginPage.xaml">Log In</Hyperlink></TextBlock>
     </StackPanel>
