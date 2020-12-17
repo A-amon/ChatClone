@@ -16,6 +16,7 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Width="230" Background="#2f3136">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
@@ -24,7 +25,7 @@
                     <TextBox materialDesign:HintAssist.Hint="Find or start a conversation" Foreground="White" BorderBrush="Transparent"/>
                 </Border>
                 <Separator Margin="0,15,0,15" Background="Black"/>
-                <ListBox Margin="0,0,0,10">
+                <ListBox Margin="0,0,0,10" Name="TabsList">
                     <ListBoxItem Cursor="Hand" Selected="SelectFriends">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="People" VerticalAlignment="Center" Foreground="#8e9297" Height="20" Width="20" Margin="0,0,10,0"/>
@@ -34,7 +35,24 @@
                 </ListBox>
                 <TextBlock Margin="10,0,10,0" Foreground="#8e9297" FontWeight="DemiBold">Direct Messages</TextBlock>
             </StackPanel>
-            <ItemsControl Grid.Row="1" Name="UserPanel" Background="#292b2f" Padding="0,10,0,10">
+            <ListBox Grid.Row="1" Name="ChatsList" HorizontalContentAlignment="Stretch" Margin="10,0,10,0" SelectionChanged="OpenChat">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Tag="{Binding Id}" Orientation="Horizontal" Cursor="Hand">
+                            <Ellipse Width="35" Height="35">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{Binding Image}" Stretch="UniformToFill"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <StackPanel Margin="10,0,0,0" >
+                                <TextBlock Foreground="White" FontWeight="Bold" FontSize="13" Text="{Binding Name}"/>
+                                <TextBlock Foreground="#8e9297" Margin="0,5,0,0" Text="{Binding Id}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ItemsControl Grid.Row="2" Name="UserPanel" Background="#292b2f" Padding="0,10,0,10">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -43,9 +61,9 @@
                                     <ImageBrush ImageSource="{Binding Image}" Stretch="UniformToFill"/>
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <StackPanel Margin="10,0,0,0" >
+                            <StackPanel Margin="10,0,0,0">
                                 <TextBlock Foreground="White" FontWeight="Bold" FontSize="13" Text="{Binding Name}"/>
-                                <TextBlock Foreground="Gray" Margin="0,5,0,0" Text="{Binding Id}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Width="50"/>
+                                <TextBlock Foreground="#8e9297" Margin="0,5,0,0" Text="{Binding Id}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Width="50"/>
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>
@@ -53,7 +71,6 @@
             </ItemsControl>
         </Grid>
         <Frame Name="MainFrame" Grid.Column="1">
-            
         </Frame>
     </Grid>
 </Page>

@@ -141,10 +141,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\ChatHandler.cs" />
+    <Compile Include="Classes\DmChat.cs" />
     <Compile Include="Classes\LogHandler.cs" />
     <Compile Include="Classes\Friend.cs" />
     <Compile Include="Classes\FriendHandler.cs" />
     <Compile Include="Classes\Global.cs" />
+    <Compile Include="Classes\Message.cs" />
     <Compile Include="Classes\User.cs" />
     <Compile Include="Classes\UserHandler.cs" />
     <Compile Include="Friends\Add.xaml.cs">

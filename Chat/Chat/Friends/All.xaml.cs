@@ -34,9 +34,10 @@ namespace Chat
             SetDisplayFriends();
         }
 
+        private List<Friend> friend_users;
         private async void SetDisplayFriends()
         {
-            List<Friend> friend_users = await user_handler.GetAllFriends(friends);
+            friend_users = await user_handler.GetAllFriends(friends);
 
             await Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -44,8 +45,14 @@ namespace Chat
             }), null);
         }
 
-        private void Message(object sender, RoutedEventArgs e)
+        private async void Message(object sender, RoutedEventArgs e)
         {
+            string friend_id = ((Button)sender).Tag.ToString();
+
+            ChatHandler chat_handler = new ChatHandler();
+            bool res = await chat_handler.CreateChat(friend_id);
+            if (!res)
+                MessageBox.Show("Failed to create conversation. Please try again later.");
 
         }
     }

@@ -37,7 +37,6 @@ namespace Chat
                 ContentPresenter cp = ChatsPanel.ItemContainerGenerator.ContainerFromIndex(0) as ContentPresenter;
                 //trigger click event for first chatgroup - DM
                 ((Button)VisualTreeHelper.GetChild(cp, 0)).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-
             };
         }
 

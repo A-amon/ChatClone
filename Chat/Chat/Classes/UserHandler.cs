@@ -30,6 +30,7 @@ namespace Chat.Classes
             return Convert.ToBase64String(hashed);
         }
 
+        //get user info by their Id
         private async Task<DocumentSnapshot> GetUserById(string id)
         {
             try
@@ -47,30 +48,38 @@ namespace Chat.Classes
         //get users' name and id from list of friends
         public async Task<List<Friend>> GetAllFriends(List<string> friends)
         {
+            List<string> invalid_friends = new List<string>();
             List<Friend> friend_users = new List<Friend>();
             foreach (string friend in friends)
             {
                 try
                 {
                     DocumentSnapshot snapshot = await GetUserById(friend);
+                    //if user with Id exists
                     if (snapshot.Exists)
                     {
                         Dictionary<string, object> user = snapshot.ToDictionary();
                         friend_users.Add(new Friend { Id = friend, Name = user["Username"].ToString() });
                     }
+                    //add invalid/not found user Id to list of Id (to be removed from friends array)
                     else
-                        RemoveFriendById(friend);
+                        invalid_friends.Add(friend);
                 }
                 catch (Exception err)
                 {
                     LogHandler.Log(err.Message);
                 }
             }
+
+            //remove Id from friends array if not valid/ found
+            foreach (string friend in invalid_friends)
+                await RemoveFriendById(friend); 
+
             return friend_users;
         }
 
         //delete invalid request's user id in user's list of friends
-        private async void RemoveFriendById(string friend_id)
+        private async Task<bool> RemoveFriendById(string friend_id)
         {
             try
             {
@@ -82,40 +91,50 @@ namespace Chat.Classes
                 };
                 await doc_ref.UpdateAsync(update);
                 LogHandler.Log(string.Format("Removed invalid friend Id= {0}", friend_id));
+                return true;
             }
             catch (Exception err)
             {
                 LogHandler.Log(err.Message);
             }
+            return false;
         }
 
         //get users' name and id from list of requests
         public async Task<List<Friend>> GetAllRequests(List<string> requests)
         {
+            List<string> invalid_req = new List<string>();
             List<Friend> request_users = new List<Friend>();
             foreach(string request in requests)
             {
                 try
                 {
                     DocumentSnapshot snapshot = await GetUserById(request);
+                    //if user with Id exists
                     if (snapshot.Exists)
                     {
                         Dictionary<string, object> user = snapshot.ToDictionary();
-                        request_users.Add(new Friend { Id = request,Name = user["Username"].ToString() });
+                        request_users.Add(new Friend { Id = request, Name = user["Username"].ToString() });
                     }
+                    //add invalid/ not found user Id to list of Id (to be removed from requests array)
                     else
-                        RemoveRequestById(request);
+                        invalid_req.Add(request);
                 }
                 catch(Exception err)
                 {
                     LogHandler.Log(err.Message);
                 }
             }
+
+            //remove Id from requests array if not valid/ found
+            foreach (string req in invalid_req)
+                await RemoveRequestById(req);
+
             return request_users;
         }
 
         //delete invalid request's user id in user's list of requests
-        private async void RemoveRequestById(string request_id)
+        public async Task<bool> RemoveRequestById(string request_id)
         {
             try
             {
@@ -127,11 +146,13 @@ namespace Chat.Classes
                 };
                 await doc_ref.UpdateAsync(update);
                 LogHandler.Log(string.Format("Removed invalid request Id= {0}",request_id));
+                return true;
             }
             catch (Exception err)
             {
                 LogHandler.Log(err.Message);
             }
+            return false;
         }
 
         //error codes
@@ -152,12 +173,14 @@ namespace Chat.Classes
                     List<string> requests;
                     if (user.TryGetValue("Requests",out requests_val))
                     {
+                        //if user has requests array, set to the existing array
                         requests = (List<string>)requests_val;                            
                     }
                     else
                     {
                         requests = new List<string>();
                     }
+                    //add user id to list of requests
                     if (!requests.Contains(Global.current_user.Id))
                         requests.Add(Global.current_user.Id);
 
@@ -230,6 +253,7 @@ namespace Chat.Classes
                         Global.current_user.Email = email;
                         Global.current_user.Requests = new List<string>();
                         Global.current_user.Friends = new List<string>();
+                        Global.current_user.Chats = new List<DmChat>();
                     }
                     catch (Exception err)
                     {
@@ -252,20 +276,23 @@ namespace Chat.Classes
             return error_code;
         }
 
-        //listen for realtime updates on requests
+        private FirestoreChangeListener listener;
+
+        //listen for realtime updates on user
         public void ListenForUpdates(string id)
         {
             DocumentReference doc_ref = users_col.Document(id);
 
             try
             {
-                FirestoreChangeListener listener = doc_ref.Listen((Action<DocumentSnapshot>)(user_snapshot =>
+                listener = doc_ref.Listen((Action<DocumentSnapshot>)(user_snapshot =>
                 {
                     Dictionary<string, object> user = user_snapshot.ToDictionary();
 
                     object requests_val, friends_val;
                     if (user.TryGetValue("Requests", out requests_val) || user.TryGetValue("Friends",out friends_val))
                     {
+                        //get current user's request list
                         if(user.TryGetValue("Requests", out requests_val))
                         {
                             List<string> requests = new List<string>();
@@ -275,6 +302,7 @@ namespace Chat.Classes
                             Global.current_user.Requests = requests;
                             LogHandler.Log(string.Format("Retrieved {0} requests.", requests.Count));
                         }
+                        //get current user's friends list
                         if(user.TryGetValue("Friends", out friends_val))
                         {
                             List<string> friends = new List<string>();
@@ -296,6 +324,11 @@ namespace Chat.Classes
             {
                 LogHandler.Log(err.Message);
             }
+        }
+
+        public async void StopListeningUpdates()
+        {
+            await listener.StopAsync();
         }
 
         //error codes
@@ -355,6 +388,7 @@ namespace Chat.Classes
                             Global.current_user.Email = email;
                             Global.current_user.Requests = requests;
                             Global.current_user.Friends = friends;
+                            Global.current_user.Chats = new List<DmChat>();
                         }
                         else
                         {

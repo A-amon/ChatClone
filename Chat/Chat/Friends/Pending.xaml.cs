@@ -34,6 +34,11 @@ namespace Chat.Friends
             user_handler.Subscribe((IObserver<User>)this);
 
             user_handler.ListenForUpdates(Global.current_user.Id);
+
+            this.Unloaded += delegate
+            {
+                user_handler.StopListeningUpdates();
+            };
         }
 
         public void OnCompleted()
@@ -69,10 +74,13 @@ namespace Chat.Friends
             }
         }
 
-        private void DeleteRequest(object sender, RoutedEventArgs e)
+        private async void DeleteRequest(object sender, RoutedEventArgs e)
         {
             string request_id = ((Button)sender).Tag.ToString();
 
+            bool res = await user_handler.RemoveRequestById(request_id);
+            if (!res)
+                MessageBox.Show("Failed to delete request. Please try again later.");
         }
     }
 }

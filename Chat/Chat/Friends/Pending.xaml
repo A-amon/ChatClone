@@ -26,7 +26,7 @@
                     </Ellipse>
                     <StackPanel Grid.Column="1" Margin="10,0,0,0">
                         <TextBlock Foreground="White" FontWeight="Bold" FontSize="15" Text="{Binding Name}"/>
-                        <TextBlock Foreground="Gray" Margin="0,5,0,0" Text="{Binding Id}"/>
+                        <TextBlock Foreground="#8e9297" Margin="0,5,0,0" Text="{Binding Id}"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2" Orientation="Horizontal" >
                         <Button Tag="{Binding Id}" materialDesign:ButtonAssist.CornerRadius="100" Background="#292b2f" Padding="0,0,0,0" Height="40" Width="40" Margin="0,0,10,0" Click="AcceptRequest">
