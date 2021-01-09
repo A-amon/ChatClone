@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chat.Classes
 {
-    public class Friend
+    public class Request
     {
         private string image = null;
         private string name;

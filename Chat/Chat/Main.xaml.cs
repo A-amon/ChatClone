@@ -48,7 +48,7 @@ namespace Chat
             //change frame content - Navigation
             if (current_tab.Tag.ToString().Equals("Dm"))
             {
-                MainFrame.Navigate(new System.Uri("DmPage.xaml", UriKind.RelativeOrAbsolute));
+                MainFrame.Navigate(new System.Uri("Dm/DmPage.xaml", UriKind.RelativeOrAbsolute));
             }
             else
             {

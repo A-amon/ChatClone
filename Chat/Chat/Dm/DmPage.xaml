@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DmPage"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         >
     <Grid>
         <Grid.ColumnDefinitions>
@@ -38,7 +38,7 @@
             <ListBox Grid.Row="1" Name="ChatsList" HorizontalContentAlignment="Stretch" Margin="10,0,10,0" SelectionChanged="OpenChat">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Tag="{Binding Id}" Orientation="Horizontal" Cursor="Hand">
+                        <StackPanel Tag="{Binding ChatId}" Orientation="Horizontal" Cursor="Hand">
                             <Ellipse Width="35" Height="35">
                                 <Ellipse.Fill>
                                     <ImageBrush ImageSource="{Binding Image}" Stretch="UniformToFill"/>
@@ -46,29 +46,38 @@
                             </Ellipse>
                             <StackPanel Margin="10,0,0,0" >
                                 <TextBlock Foreground="White" FontWeight="Bold" FontSize="13" Text="{Binding Name}"/>
-                                <TextBlock Foreground="#8e9297" Margin="0,5,0,0" Text="{Binding Id}"/>
+                                <TextBlock Foreground="#8e9297" Margin="0,5,0,0" Text="{Binding FriendId}"/>
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ItemsControl Grid.Row="2" Name="UserPanel" Background="#292b2f" Padding="0,10,0,10">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Ellipse Grid.Column="0" Height="45" Width="45">
-                                <Ellipse.Fill>
-                                    <ImageBrush ImageSource="{Binding Image}" Stretch="UniformToFill"/>
-                                </Ellipse.Fill>
-                            </Ellipse>
-                            <StackPanel Margin="10,0,0,0">
-                                <TextBlock Foreground="White" FontWeight="Bold" FontSize="13" Text="{Binding Name}"/>
-                                <TextBlock Foreground="#8e9297" Margin="0,5,0,0" Text="{Binding Id}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Width="50"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <Border Grid.Row="2" Background="#292b2f" Padding="10,10,10,10">
+                <Grid Name="UserPanel">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Ellipse Name="UserProfile" Grid.Column="0" Height="45" Width="45" MouseLeftButtonDown="ViewImage" Cursor="Hand">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="{Binding Path=Image, UpdateSourceTrigger=PropertyChanged}" Stretch="UniformToFill"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0" Cursor="Hand" MouseEnter="CopyId">
+                        <StackPanel.ToolTip>
+                            <ToolTip Placement="Top">
+                                <TextBlock Text="Copied Id"/>
+                            </ToolTip>
+                        </StackPanel.ToolTip>
+                        <TextBlock Foreground="White" FontWeight="Bold" FontSize="13" Text="{Binding Path=Name,UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Foreground="#8e9297" Margin="0,5,0,0" Text="{Binding Id}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Width="70" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                    <Button Background="Transparent" BorderThickness="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Grid.Column="2" materialDesign:ButtonAssist.CornerRadius="100" Padding="5,5,5,5" MinHeight="20" MinWidth="20">
+                        <materialDesign:PackIcon Kind="Settings" Foreground="White" Height="20" Width="20" />
+                    </Button>
+                </Grid>
+            </Border>
         </Grid>
         <Frame Name="MainFrame" Grid.Column="1">
         </Frame>

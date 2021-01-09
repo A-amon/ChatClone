@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chat.Classes
 {
-    public class DmChat
+    public class DmChat:Friend
     {
         private string friend_id, chat_id;
 

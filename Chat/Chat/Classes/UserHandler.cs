@@ -1,6 +1,8 @@
 ﻿using Google.Cloud.Firestore;
+using Google.Cloud.Storage.V1;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -21,6 +23,42 @@ namespace Chat.Classes
             users_col = Global.firestore.Collection("Users");
         }
 
+        public async Task<bool> UpdateImage(string image_path)
+        {
+            try
+            {
+                var storage = StorageClient.Create();
+                using (var file = File.OpenRead(image_path))
+                {
+                    Google.Apis.Storage.v1.Data.Object uploaded = await storage.UploadObjectAsync("ferrous-destiny-298611.appspot.com", Global.current_user.Id, null, file);
+                    LogHandler.Log(string.Format("Uploaded user {0} profile image", Global.current_user.Id));
+                    try
+                    {
+                        DocumentReference doc_ref = users_col.Document(Global.current_user.Id);
+                        Dictionary<string, object> update = new Dictionary<string, object>
+                        {
+                            {"Profile", uploaded.MediaLink }
+                        };
+                        await doc_ref.UpdateAsync(update);
+                        Global.current_user.Image = uploaded.MediaLink;
+
+                        LogHandler.Log(string.Format("Updated user {0} profile image", Global.current_user.Id));
+                        return true;
+                    }
+                    catch(Exception err)
+                    {
+                        LogHandler.Log(err.Message);
+                    }
+                }
+                return true;
+            }
+            catch(Exception err)
+            {
+                LogHandler.Log(err.Message);
+            }
+            return false;
+        }
+
         private string HashPassword(string password)
         {
             var hasher = new SHA256Managed();
@@ -31,7 +69,7 @@ namespace Chat.Classes
         }
 
         //get user info by their Id
-        private async Task<DocumentSnapshot> GetUserById(string id)
+        public async Task<DocumentSnapshot> GetUserById(string id)
         {
             try
             {
@@ -59,7 +97,7 @@ namespace Chat.Classes
                     if (snapshot.Exists)
                     {
                         Dictionary<string, object> user = snapshot.ToDictionary();
-                        friend_users.Add(new Friend { Id = friend, Name = user["Username"].ToString() });
+                        friend_users.Add(new Friend { Id = friend, Name = user["Username"].ToString(), Image = user["Profile"].ToString() });
                     }
                     //add invalid/not found user Id to list of Id (to be removed from friends array)
                     else
@@ -114,7 +152,7 @@ namespace Chat.Classes
                     if (snapshot.Exists)
                     {
                         Dictionary<string, object> user = snapshot.ToDictionary();
-                        request_users.Add(new Friend { Id = request, Name = user["Username"].ToString() });
+                        request_users.Add(new Friend { Id = request, Name = user["Username"].ToString(), Image = user["Profile"].ToString() });
                     }
                     //add invalid/ not found user Id to list of Id (to be removed from requests array)
                     else
@@ -170,16 +208,14 @@ namespace Chat.Classes
                     Dictionary<string, object> user = snapshot.ToDictionary();
 
                     object requests_val;
-                    List<string> requests;
+                    List<string> requests = new List<string>();
                     if (user.TryGetValue("Requests",out requests_val))
                     {
                         //if user has requests array, set to the existing array
-                        requests = (List<string>)requests_val;                            
+                        foreach (object request in (List<object>)requests_val)
+                            requests.Add((string)request);     
                     }
-                    else
-                    {
-                        requests = new List<string>();
-                    }
+                 
                     //add user id to list of requests
                     if (!requests.Contains(Global.current_user.Id))
                         requests.Add(Global.current_user.Id);
@@ -357,8 +393,8 @@ namespace Chat.Classes
                             db_id = document.Id;
                         }
 
-                        string db_username, db_password;
-                        db_username = db_password = string.Empty;
+                        string db_username, db_password, db_image;
+                        db_username = db_password = db_image = string.Empty;
                         List<string> requests = new List<string>();
                         List<string> friends = new List<string>();
 
@@ -377,8 +413,9 @@ namespace Chat.Classes
                             {
                                 foreach (object friend in (List<object>)info.Value)
                                     friends.Add((string)friend);
-                            }
-                                
+                            }               
+                            else if(info.Key.Equals("Profile"))
+                                db_image = info.Value.ToString();
                         }
                         if (db_password.Equals(HashPassword(password)))
                         {
@@ -389,6 +426,7 @@ namespace Chat.Classes
                             Global.current_user.Requests = requests;
                             Global.current_user.Friends = friends;
                             Global.current_user.Chats = new List<DmChat>();
+                            Global.current_user.Image = db_image;
                         }
                         else
                         {
@@ -439,6 +477,29 @@ namespace Chat.Classes
                 {
                     DocumentReference doc_ref = users_col.Document(Global.current_user.Id);
                     await doc_ref.UpdateAsync(update);
+
+                    try
+                    {
+                        DocumentSnapshot friend_snapshot = await GetUserById(friend_id);
+                        Dictionary<string, object> friend_info = friend_snapshot.ToDictionary();
+                        List<string> friend_ids = new List<string>();
+                        object friend_val;
+                        if (friend_info.TryGetValue("Friends",out friend_val))
+                        {
+                            foreach (object id in (List<object>)friend_val)
+                                friend_ids.Add((string)id);
+                        }
+                        friend_ids.Add(Global.current_user.Id);
+
+                        await users_col.Document(friend_id).UpdateAsync(new Dictionary<string, object>
+                        {
+                            {"Friends",friend_ids }
+                        });
+                    }
+                    catch(Exception err)
+                    {
+                        LogHandler.Log(err.Message);
+                    }
                 }
                 catch (Exception err)
                 {

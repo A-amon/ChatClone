@@ -24,6 +24,7 @@ namespace Chat
         public SignUpPage()
         {
             InitializeComponent();
+            EmailTextbox.Focus();
         }
 
         public event EventHandler StopLoading;

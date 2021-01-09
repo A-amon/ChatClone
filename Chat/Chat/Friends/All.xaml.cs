@@ -19,7 +19,7 @@ namespace Chat
     /// <summary>
     /// Interaction logic for All.xaml
     /// </summary>
-    public partial class All : Page
+    public partial class All : Page, IObserver<User>
     {
         private List<string> friends;
         private UserHandler user_handler;
@@ -28,16 +28,37 @@ namespace Chat
         {
             InitializeComponent();
 
-            friends = Global.current_user.Friends;
-            user_handler = new UserHandler();
+            friends = new List<string>();
 
-            SetDisplayFriends();
+            user_handler = new UserHandler();
+            user_handler.Subscribe((IObserver<User>)this);
+
+            user_handler.ListenForUpdates(Global.current_user.Id);
+
+            this.Unloaded += delegate
+            {
+                user_handler.StopListeningUpdates();
+            };
+        }     
+
+        private async void Message(object sender, RoutedEventArgs e)
+        {
+            string friend_id = ((Button)sender).Tag.ToString();
+
+            if(Global.current_user.Chats.Where(chat=>chat.FriendId.Equals(friend_id)).ToArray().Count() == 0)
+            {
+                ChatHandler chat_handler = new ChatHandler();
+                bool res = await chat_handler.CreateChat(friend_id);
+                if (!res)
+                    MessageBox.Show("Failed to create conversation. Please try again later.");
+            }
         }
 
-        private List<Friend> friend_users;
-        private async void SetDisplayFriends()
+        public async void OnNext(User value)
         {
-            friend_users = await user_handler.GetAllFriends(friends);
+            friends = value.Friends;
+
+            List<Friend> friend_users = await user_handler.GetAllFriends(friends);
 
             await Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -45,15 +66,14 @@ namespace Chat
             }), null);
         }
 
-        private async void Message(object sender, RoutedEventArgs e)
+        public void OnError(Exception error)
         {
-            string friend_id = ((Button)sender).Tag.ToString();
+            throw new NotImplementedException();
+        }
 
-            ChatHandler chat_handler = new ChatHandler();
-            bool res = await chat_handler.CreateChat(friend_id);
-            if (!res)
-                MessageBox.Show("Failed to create conversation. Please try again later.");
-
+        public void OnCompleted()
+        {
+            throw new NotImplementedException();
         }
     }
 }
