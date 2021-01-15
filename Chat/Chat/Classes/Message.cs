@@ -10,6 +10,7 @@ namespace Chat.Classes
     {
         private DateTime datetime;
         private string senderId, text, messageId,name,image;
+        private bool sent = true;
 
         public DateTime Datetime { get => datetime; set => datetime = value; }
         public string SenderId { get => senderId; set => senderId = value; }
@@ -17,5 +18,6 @@ namespace Chat.Classes
         public string MessageId { get => messageId; set => messageId = value; }
         public string Image { get => image; set => image = value; }
         public string Name { get => name; set => name = value; }
+        public bool Sent { get => sent; set => sent = value; }
     }
 }

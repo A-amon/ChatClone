@@ -34,7 +34,17 @@
                                     <TextBlock FontSize="13" Foreground="White" Text="{Binding Name}" FontWeight="Bold" VerticalAlignment="Bottom"/>
                                     <TextBlock Text="{Binding Datetime}" VerticalAlignment="Bottom" Foreground="#8e9297" FontSize="10" FontWeight="DemiBold" Margin="10,0,0,0"/>
                                 </StackPanel>
-                                <TextBlock FontSize="13" Foreground="White" TextWrapping="Wrap" Text="{Binding Text}"/>
+                                <TextBlock FontSize="13" Foreground="White" TextWrapping="Wrap" Text="{Binding Text}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Sent}" Value="False">
+                                                    <Setter Property="Opacity" Value="0.5"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </StackPanel>
                         </Grid>
                     </DataTemplate>

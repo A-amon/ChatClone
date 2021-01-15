@@ -74,7 +74,13 @@ namespace Chat.Dm
             if (update_type.Equals("Added"))
             {
                 Dispatcher.BeginInvoke(new Action(()=> {
-                    messages.Add((Message)value.First().Value);
+                    Message new_message = (Message)value.First().Value;
+
+                    //remove displayed unsent message (while sending initially) 
+                    if(new_message.SenderId == Global.current_user.Id)
+                        messages.Remove(messages.Where(message => message.SenderId.Equals(new_message.SenderId) && message.Text.Equals(new_message.Text) && message.Sent == false).ToArray()[0]);
+
+                    messages.Add(new_message);
                 }), null);
             }
             else if(update_type.Equals("Removed"))
@@ -99,6 +105,14 @@ namespace Chat.Dm
                 string message = MessageTextbox.Text;
                 if (!string.IsNullOrEmpty(message) && !string.IsNullOrWhiteSpace(message))
                 {
+                    //display unsent message with 0.5 opacity while sending
+                    messages.Add(new Message() { 
+                        Sent = false,
+                        Text = message,
+                        Name = Global.current_user.Name,
+                        SenderId = Global.current_user.Id
+                    });
+
                     bool res = await chat_handler.SendMessage(chat_id, message);
                     MessageTextbox.Text = "";
                     if (!res)
