@@ -152,7 +152,10 @@ namespace Chat.Classes
                     if (snapshot.Exists)
                     {
                         Dictionary<string, object> user = snapshot.ToDictionary();
-                        request_users.Add(new Friend { Id = request, Name = user["Username"].ToString(), Image = user["Profile"].ToString() });
+                        if(user.ContainsKey("Profile"))
+                            request_users.Add(new Friend { Id = request, Name = user["Username"].ToString(), Image = user["Profile"].ToString() });
+                        else
+                            request_users.Add(new Friend { Id = request, Name = user["Username"].ToString()});
                     }
                     //add invalid/ not found user Id to list of Id (to be removed from requests array)
                     else

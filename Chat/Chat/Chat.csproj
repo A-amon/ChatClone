@@ -157,7 +157,6 @@
     <Compile Include="Classes\FriendHandler.cs" />
     <Compile Include="Classes\Global.cs" />
     <Compile Include="Classes\Message.cs" />
-    <Compile Include="Classes\Request.cs" />
     <Compile Include="Classes\User.cs" />
     <Compile Include="Classes\UserHandler.cs" />
     <Compile Include="Dm\DmChatbox.xaml.cs">

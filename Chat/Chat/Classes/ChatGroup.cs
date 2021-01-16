@@ -15,11 +15,5 @@ namespace Chat.Classes
         public string Id { get => id; set => id = value; }
         public string Type { get => type; set => type = value; }
         public string Image { get => image; set => image = value; }
-
-        /*
-          public string Name { get; set; }
-          public string Type { get; set; }
-          public string Image { get; set; }
-        */
     }
 }
