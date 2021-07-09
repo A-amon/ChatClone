@@ -10,7 +10,7 @@ Few things piqued my curiosity hence, the goals for this project (which explains
 ## Packages
 * Google Apis
 * Google Cloud Storage
-* Material Design Themes (for icons)
+* [Material Design Themes](http://materialdesigninxaml.net/) (for icons)
 
 ## Features
 * Upload profile picture via drag & drop
