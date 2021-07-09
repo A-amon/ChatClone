@@ -3,6 +3,11 @@
 
 This is done on WPF framework with <img alt="Firebase" src="https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase"/> used to store the data
 
+## Packages
+* Google Apis
+* Google Cloud Storage
+* Material Design Themes (for icons)
+
 Few things piqued my curiosity hence, the goals for this project (which explains its limited features :relieved:)
 
 ## Features
