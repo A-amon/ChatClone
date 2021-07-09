@@ -1,6 +1,8 @@
 # ChatClone
 <img alt="C#" src="https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white"/>
 
+<img alt="Add Friend screen" src="https://github.com/A-amon/ChatClone/blob/main/Images/addfriend.PNG"/>
+
 This is done on WPF framework with <img alt="Firebase" src="https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase"/> used to store the data
 
 Few things piqued my curiosity hence, the goals for this project (which explains its limited features :relieved:)
